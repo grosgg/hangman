@@ -1,7 +1,8 @@
 require 'faker'
 
 FactoryGirl.define do
-  factory :word do |f|
-    f.name { Faker::Address.country }
+  factory :word do
+    name { Faker::Address.country }
+    category
   end
 end

@@ -15,9 +15,12 @@ ActiveRecord::Schema.define(version: 20130805211551) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
+    t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "categories", ["language_id"], name: "index_categories_on_language_id"
 
   create_table "games", force: true do |t|
     t.string   "session"
@@ -27,13 +30,11 @@ ActiveRecord::Schema.define(version: 20130805211551) do
     t.string   "wrongLetters"
     t.integer  "word_id"
     t.integer  "category_id"
-    t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "games", ["category_id"], name: "index_games_on_category_id"
-  add_index "games", ["language_id"], name: "index_games_on_language_id"
   add_index "games", ["word_id"], name: "index_games_on_word_id"
 
   create_table "languages", force: true do |t|
@@ -45,12 +46,10 @@ ActiveRecord::Schema.define(version: 20130805211551) do
   create_table "words", force: true do |t|
     t.string   "name"
     t.integer  "category_id"
-    t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "words", ["category_id"], name: "index_words_on_category_id"
-  add_index "words", ["language_id"], name: "index_words_on_language_id"
 
 end

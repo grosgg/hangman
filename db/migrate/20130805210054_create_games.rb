@@ -8,7 +8,6 @@ class CreateGames < ActiveRecord::Migration
       t.string :wrongLetters
       t.references :word, index: true
       t.references :category, index: true
-      t.references :language, index: true
 
       t.timestamps
     end
