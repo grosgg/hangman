@@ -13,5 +13,9 @@ describe Word do
     Word.new.should respond_to :category
   end
 
-  it "checks if a letter is contained in the name"
+  it "checks if a letter is contained in the name" do
+    argentina = FactoryGirl.create(:word, name: "argentina")
+    expect(argentina.contains_letter?("a")).to be_true
+    expect(argentina.contains_letter?("o")).to be_false
+  end
 end
