@@ -53,4 +53,12 @@ describe Game do
     game.add_to_wrong_letters!("w");
     expect(game.wrongLetters).to eq("kzwxq");
   end
+
+  it "switches the to next round" do
+    game = FactoryGirl.create(:game, totalRounds: 5, currentRound: 4)
+    expect(game.next_round!).to be_true
+    expect(game.currentRound).to eq(5)
+    expect(game.next_round!).to be_false
+    expect(game.currentRound).to eq(5)
+  end
 end

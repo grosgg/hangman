@@ -27,4 +27,13 @@ class Game < ActiveRecord::Base
     end
     self.wrongLetters
   end
+
+  def next_round!
+    if self.currentRound < self.totalRounds
+      self.currentRound += 1
+      true
+    else
+      false
+    end
+  end
 end
