@@ -38,6 +38,19 @@ describe Game do
 
   it "checks if all correct letters were found"
 
-  it "adds a letter to the list of used letters"
-  it "adds a letter to the list of wrong letters"
+  it "adds a letter to the list of used letters" do
+    game = FactoryGirl.create(:game, usedLetters: "aeiou")
+    game.add_to_used_letters!("t");
+    expect(game.usedLetters).to eq("aeiout");
+    game.add_to_used_letters!("e");
+    expect(game.usedLetters).to eq("aeiout");
+  end
+
+  it "adds a letter to the list of wrong letters" do
+    game = FactoryGirl.create(:game, wrongLetters: "kzwx", usedLetters: "akxeiwozu")
+    game.add_to_wrong_letters!("q");
+    expect(game.wrongLetters).to eq("kzwxq");
+    game.add_to_wrong_letters!("w");
+    expect(game.wrongLetters).to eq("kzwxq");
+  end
 end
