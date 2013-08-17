@@ -36,8 +36,6 @@ describe Game do
     expect(game.was_letter_used?("t")).to be_false
   end
 
-  it "checks if all correct letters were found"
-
   it "adds a letter to the list of used letters" do
     game = FactoryGirl.create(:game, usedLetters: "aeiou")
     game.add_to_used_letters!("t");
@@ -60,5 +58,14 @@ describe Game do
     expect(game.currentRound).to eq(5)
     expect(game.next_round!).to be_false
     expect(game.currentRound).to eq(5)
+  end
+
+  it "checks if all correct letters were found" do
+    france = FactoryGirl.create(:word, name: "france")
+    completedGame = FactoryGirl.create(:game, usedLetters: "eartcmlnif", word: france)
+    uncompletedGame = FactoryGirl.create(:game, usedLetters: "eartok", word: france)
+
+    expect(completedGame.found_all_letters?).to be_true
+    expect(uncompletedGame.found_all_letters?).to be_false
   end
 end

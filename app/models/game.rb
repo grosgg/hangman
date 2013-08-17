@@ -28,6 +28,15 @@ class Game < ActiveRecord::Base
     self.wrongLetters
   end
 
+  def found_all_letters?
+    self.word.name.each_char do |c|
+        if !was_letter_used?(c)
+          return false
+        end
+    end
+    return true
+  end
+
   def next_round!
     if self.currentRound < self.totalRounds
       self.currentRound += 1
