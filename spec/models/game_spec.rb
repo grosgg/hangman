@@ -30,24 +30,26 @@ describe Game do
 
   it "adds a letter to the list of used letters" do
     game = FactoryGirl.create(:game, usedLetters: "aeiou".chars)
-    game.add_to_used_letters!("t");
-    expect(game.usedLetters).to eq("aeiout".chars);
-    game.add_to_used_letters!("e");
-    expect(game.usedLetters).to eq("aeiout".chars);
+    game.add_to_used_letters!("t")
+    expect(game.usedLetters).to eq("aeiout".chars)
+    game.add_to_used_letters!("e")
+    expect(game.usedLetters).to eq("aeiout".chars)
   end
 
   it "adds a letter to the list of wrong letters" do
     game = FactoryGirl.create(:game, wrongLetters: "kzwx".chars, usedLetters: "akxeiwozu".chars)
-    game.add_to_wrong_letters!("q");
-    expect(game.wrongLetters).to eq("kzwxq".chars);
-    game.add_to_wrong_letters!("w");
-    expect(game.wrongLetters).to eq("kzwxq".chars);
+    game.add_to_wrong_letters!("q")
+    expect(game.wrongLetters).to eq("kzwxq".chars)
+    game.add_to_wrong_letters!("w")
+    expect(game.wrongLetters).to eq("kzwxq".chars)
   end
 
   it "switches the to next round" do
-    game = FactoryGirl.create(:game, currentRound: 0)
+    game = FactoryGirl.create(:game, currentRound: 0, usedLetters: "aeiou".chars, wrongLetters: "mp".chars)
     expect(game.next_round!).to be_true
     expect(game.currentRound).to eq(1)
+    expect(game.usedLetters).to be_empty
+    expect(game.wrongLetters).to be_empty
     expect(game.next_round!).to be_false
     expect(game.currentRound).to eq(1)
   end

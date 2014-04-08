@@ -46,6 +46,8 @@ class Game
   def next_round!
     if self.currentRound < self.words.count-1
       self.currentRound += 1
+      self.usedLetters.clear
+      self.wrongLetters.clear
       true
     else
       false
