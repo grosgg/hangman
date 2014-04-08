@@ -51,6 +51,7 @@ end
 
 group :development do
   gem 'mina'
+  gem 'rubocop', require: false
 end
 
 group :test do
