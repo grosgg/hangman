@@ -1,5 +1,10 @@
-class Word < ActiveRecord::Base
+class Word
+  include Mongoid::Document
+
+  field :name, type: String
+
   belongs_to :category
+  has_and_belongs_to_many :games
 
   validates :name, presence: true
 

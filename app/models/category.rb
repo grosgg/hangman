@@ -1,4 +1,7 @@
-class Category < ActiveRecord::Base
-  belongs_to :language
+class Category
+  include Mongoid::Document
+
+  field :name, type: String
+
   validates :name, presence: true
 end

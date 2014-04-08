@@ -5,20 +5,12 @@ describe Game do
     FactoryGirl.create(:game).should be_valid
   end
 
-  it "is invalid without a session attached" do
-    FactoryGirl.build(:game, session: nil).should_not be_valid
-  end
-
-  it "is invalid without round total" do
-    FactoryGirl.build(:game, totalRounds: nil).should_not be_valid
-  end
-
   it "is invalid without a current round" do
     FactoryGirl.build(:game, currentRound: nil).should_not be_valid
   end
 
   it "has a current word" do
-    FactoryGirl.create(:game).should respond_to :word
+    FactoryGirl.create(:game).should respond_to :words
   end
 
   it "has a category" do
@@ -26,44 +18,44 @@ describe Game do
   end
 
   it "checks how many wrong letters were used" do
-    game = FactoryGirl.create(:game, wrongLetters: "kzwx")
+    game = FactoryGirl.create(:game, wrongLetters: "kzwx".chars)
     expect(game.count_mistakes).to eq(4)
   end
 
   it "checks if a letter was already used" do
-    game = FactoryGirl.create(:game, usedLetters: "aeiou")
+    game = FactoryGirl.create(:game, usedLetters: "aeiou".chars)
     expect(game.was_letter_used?("a")).to be_true
     expect(game.was_letter_used?("t")).to be_false
   end
 
   it "adds a letter to the list of used letters" do
-    game = FactoryGirl.create(:game, usedLetters: "aeiou")
+    game = FactoryGirl.create(:game, usedLetters: "aeiou".chars)
     game.add_to_used_letters!("t");
-    expect(game.usedLetters).to eq("aeiout");
+    expect(game.usedLetters).to eq("aeiout".chars);
     game.add_to_used_letters!("e");
-    expect(game.usedLetters).to eq("aeiout");
+    expect(game.usedLetters).to eq("aeiout".chars);
   end
 
   it "adds a letter to the list of wrong letters" do
-    game = FactoryGirl.create(:game, wrongLetters: "kzwx", usedLetters: "akxeiwozu")
+    game = FactoryGirl.create(:game, wrongLetters: "kzwx".chars, usedLetters: "akxeiwozu".chars)
     game.add_to_wrong_letters!("q");
-    expect(game.wrongLetters).to eq("kzwxq");
+    expect(game.wrongLetters).to eq("kzwxq".chars);
     game.add_to_wrong_letters!("w");
-    expect(game.wrongLetters).to eq("kzwxq");
+    expect(game.wrongLetters).to eq("kzwxq".chars);
   end
 
   it "switches the to next round" do
-    game = FactoryGirl.create(:game, totalRounds: 5, currentRound: 4)
+    game = FactoryGirl.create(:game, currentRound: 0)
     expect(game.next_round!).to be_true
-    expect(game.currentRound).to eq(5)
+    expect(game.currentRound).to eq(1)
     expect(game.next_round!).to be_false
-    expect(game.currentRound).to eq(5)
+    expect(game.currentRound).to eq(1)
   end
 
   it "checks if all correct letters were found" do
     france = FactoryGirl.create(:word, name: "france")
-    completedGame = FactoryGirl.create(:game, usedLetters: "eartcmlnif", word: france)
-    uncompletedGame = FactoryGirl.create(:game, usedLetters: "eartok", word: france)
+    completedGame = FactoryGirl.create(:game, usedLetters: "eartcmlnif".chars, words: [france])
+    uncompletedGame = FactoryGirl.create(:game, usedLetters: "eartok".chars, words: [france])
 
     expect(completedGame.found_all_letters?).to be_true
     expect(uncompletedGame.found_all_letters?).to be_false

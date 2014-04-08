@@ -1,9 +1,15 @@
-class Game < ActiveRecord::Base
+class Game
+  include Mongoid::Document
+
+  field :session, type: String
+  field :currentRound, type: Integer, default: 0
+  field :usedLetters, type: Array
+  field :wrongLetters, type: Array
+
   belongs_to :category
-  belongs_to :word
+  has_and_belongs_to_many :words
 
   validates :session, presence: true
-  validates :totalRounds, presence: true
   validates :currentRound, presence: true
 
   def count_mistakes
@@ -29,7 +35,7 @@ class Game < ActiveRecord::Base
   end
 
   def found_all_letters?
-    self.word.name.each_char do |c|
+    self.words[currentRound].name.each_char do |c|
         if !was_letter_used?(c)
           return false
         end
@@ -38,7 +44,7 @@ class Game < ActiveRecord::Base
   end
 
   def next_round!
-    if self.currentRound < self.totalRounds
+    if self.currentRound < self.words.count-1
       self.currentRound += 1
       true
     else
