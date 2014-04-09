@@ -1,5 +1,6 @@
 class Game
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   field :session, type: String
   field :currentRound, type: Integer, default: 0

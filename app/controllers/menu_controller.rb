@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
   def index
-      puts JSON.generate(session)
+      @session = JSON.generate(session)
   end
 end

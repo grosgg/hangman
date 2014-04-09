@@ -9,6 +9,11 @@ describe Game do
     FactoryGirl.build(:game, currentRound: nil).should_not be_valid
   end
 
+  it "has timestamps" do
+    FactoryGirl.create(:game).should respond_to :created_at
+    FactoryGirl.create(:game).should respond_to :updated_at
+  end
+
   it "has a current word" do
     FactoryGirl.create(:game).should respond_to :words
   end

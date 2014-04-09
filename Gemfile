@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+gem 'thor', '~> 0.19.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
